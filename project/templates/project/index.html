@@ -1,0 +1,125 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Our <span class="badge badge-secondary">{{latest_projects|length}}</span> projects...</h1>
+        <p class="lead text-muted mb-0">are for the public good,</p>
+        <p class="lead text-muted mb-0">are open source and available to the public,</p>
+        <p class="lead text-muted mb-0">do not violate our Code of Conduct,</p>
+        <p class="lead text-muted mb-3">are not political or partisan.</p>
+        <a class="btn btn-primary" href="#" role="button">First Time?</a>
+        <a class="btn btn-primary" href="#" role="button">National Community</a>
+    </div>
+</section>
+
+<section class="filters">
+    <div class="container">
+            <form>
+                <div class="form-row">
+                    <div class="col my-1">
+                        <input type="text" class="form-control" placeholder="Project Title">
+                    </div>
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option selected>Stage</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option selected>Number of Members</option>
+                            <option value="1">1-5</option>
+                            <option value="2">5-10</option>
+                            <option value="3">10-20</option>
+                            <option value="3">20+</option>
+                        </select>
+                    </div>
+                    <div class="col my-1">
+                        <input type="text" class="form-control" placeholder="Open Roles">
+                    </div>
+                    <div class="col my-1">
+                        <input type="text" class="form-control" placeholder="Tags">
+                    </div>
+                    <div class="col-auto my-1">
+                        <button type="submit" class="btn btn-primary">Filter!</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+</section>
+
+
+<section class="projects-list mt-4 bg-light">
+        <div class="container pt-4">
+            {% if latest_projects %}
+                <table class="table table-responsive-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Project</th>
+                        <th scope="col">Stage</th>
+                        <th scope="col">Members</th>
+                        <th scope="col">Roles</th>
+                        <th scope="col">Tags</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for project in latest_projects %}
+                    <tr>
+                        <td><a href="/projects/{{project.id}}">{{project.project_title}}</a></td>
+                        <td>{{project.get_stage_display}}</td>
+                        <td>{{project.members.all|length}}</td>
+                        <td>
+                            {% for role in project.role_set.all %}
+                            <span class="badge badge-primary">{{role.role_title}}</span>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for tag in project.tags.all %}
+                            {% if tag.tag_type == 0 %}
+                            <span class="badge badge-primary">{{tag.tag_title}}</span>
+                            {% elif tag.tag_type == 1 %}
+                            <span class="badge badge-success">{{tag.tag_title}}</span>
+                            {% else %}
+                            <span class="badge badge-danger">{{tag.tag_title}}</span>
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            {% else %}
+                <p>No projects currently exist.</p>
+            {% endif %}
+        </div>
+    </section>
+
+<section class="projects-list mt-4 bg-light">
+    <div class="container pt-4">
+        {% if latest_projects %}
+            <div class="row">
+            {% for project in latest_projects %}
+                <div class="col-md-4">
+                    <div class="card my-4">
+                        <h5 class="card-header"><a href="/projects/{{project.id}}">{{project.project_title}}</a></h5>
+                        <div class="card-body">
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>No projects currently exist.</p>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

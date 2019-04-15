@@ -1,0 +1,78 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+
+<section class="container">
+    <div class="row">
+        <div class="col mt-4">
+            <h3><small class="text-muted">We are <span class="badge badge-secondary">{{project.get_stage_display}}</span> ...</small></h3>
+            <h1>{{ project.project_title }}</h1>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            
+            <h3>Description</h3>
+            <div class="my-4">
+                {{ project.description }}
+            </div>
+
+            <h3>Tags</h3>
+            <div class="mt-2 mb-4">
+            {% for tag in project.tags.all %}
+                {% if tag.tag_type == 0 %}
+                <span class="badge badge-primary">{{tag.tag_title}}</span>
+                {% elif tag.tag_type == 1 %}
+                <span class="badge badge-success">{{tag.tag_title}}</span>
+                {% else %}
+                <span class="badge badge-danger">{{tag.tag_title}}</span>
+                {% endif %}
+            {% endfor %}
+            </div>
+
+            <h3>Updates</h3>
+            <div>
+                {% for update in updates %}
+                <div class="card my-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{update.update_title}}</h5>
+                        <p class="card-text">{{update.update_content}}</p>
+                        <a href="#" class="btn btn-primary">Share</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-4">
+            <h3>Project Links</h3>
+            <div class="list-group my-4">
+                <a href="{{project.homepage_link}}" class="list-group-item list-group-item-action">Homepage</a>
+                <a href="{{project.developer_link}}" class="list-group-item list-group-item-action">Developers</a>
+                <a href="{{project.community_link}}" class="list-group-item list-group-item-action">Community</a>
+            </div>
+
+            <h3>Open Roles</h3>
+            {% for role in roles %}
+                <div class="card my-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{role.role_title}}</h5>
+                        <p class="card-text">Short description of the role.</p>
+                        <a href="#" class="btn btn-primary">Volunteer</a>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <h3>Members</h3>
+            <div class="mt-2 mb-4">
+                <ul class="list-group list-group-flush">
+                    {% for member in project.members.all %}
+                        <li class="list-group-item">{{member.user.username}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
