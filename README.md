@@ -1,13 +1,17 @@
 # Laddr (in Python)
 
-Some description.
+This Code for Philly project aims to provide the same functionality of the origional laddr project with a slightly different tech stack.
 
 # Goals:
 
 * Easy to get started.
 * Provide useful tools for CfP members.
 
-# Spells:
+# Getting Started:
+
+TODO
+
+# Useful terminal commands (a.k.a. spells):
 
 * `pipenv shell` & `exit`
 * `python manage.py runserver` & `^C`
@@ -19,23 +23,3 @@ Some description.
 
 * Superadmin: sean seanjcrl@gmail.com i-
 * What about a ~ community server?
-* Use: Django, jQuery, Bootstrap stack?
-
-# TODO:
-
-* __Project Directory__
-* Make filter form responsive.
-* Make filter form perform filtering (django-forms? ajax?).
-* Add toggle switch between list and card view.
-
-* __Misc__
-* Add conditionals for empty fields on /project/:id
-* Add user session/auth & groups.
-* Integrate Slack (https://github.com/izdi/django-slack-oauth)?
-* Add /pages app for static content
-
-* META: Follow best project best practices
-
-* Use github issues.
-* Add dockerfile
-* Write script to crawl current site for projects.
