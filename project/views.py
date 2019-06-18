@@ -60,3 +60,16 @@ def details(request, project_id):
 
 def homepage(request):
     return render(request, 'project/homepage.html')
+
+def mission(request): 
+    return render(request, 'project/mission.html')
+
+def conduct(request): 
+    return render(request, 'project/conduct.html')
+
+def team(request): 
+    return render(request, 'project/team.html')
+
+def contact(request): 
+    return render(request, 'project/contact.html')
+

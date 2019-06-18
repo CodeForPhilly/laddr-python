@@ -20,6 +20,10 @@ from project import views as main_views
 
 urlpatterns = [
     path('', main_views.homepage),
+    path('mission', main_views.mission),
+    path('conduct', main_views.conduct),
+    path('team', main_views.team),
+    path('contact', main_views.contact),
     path('projects/', include('project.urls')),
     path('admin/', admin.site.urls),
 ]
