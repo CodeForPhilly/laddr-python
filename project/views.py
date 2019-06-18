@@ -13,15 +13,15 @@ def index(request):
     queryset = Project.objects.annotate(num_members=Count('members'))
 
     title = request.GET.get("title", None)
-    if title: 
+    if title is not None and title != '': 
         queryset = queryset.filter(project_title__contains=title)
     
     stage = request.GET.get("stage", None)
-    if stage: 
+    if stage is not None and stage != '': 
         queryset = queryset.filter(stage=stage)
 
     members = request.GET.get("members", None)
-    if members:
+    if members is not None and members != '':
         if int(members) == 1: # 1-5
             queryset = queryset.filter(num_members__gte=1, num_members__lte=5)
         if int(members) == 2: # 5-10
@@ -32,13 +32,13 @@ def index(request):
             queryset = queryset.filter(num_members__gt=20)
 
     roles = request.GET.get("roles", None)
-    if roles: 
+    if roles is not None and roles != '': 
         role_ids = Role.objects.filter(role_title__contains=roles)
         # project_list = Role.objects.filter
         print(role_ids)
 
     tags = request.GET.get("tags", None)
-    if tags: 
+    if tags is not None and tags != '': 
         queryset = queryset.filter(tags__tag_title__contains=tags)
     
     context = {

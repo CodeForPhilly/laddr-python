@@ -16,24 +16,28 @@
 
 <section class="filters">
     <div class="container">
-            <form>
+            <form method="GET" action="/projects/">
                 <div class="form-row">
                     <div class="col my-1">
-                        <input type="text" class="form-control" placeholder="Project Title">
+                        <input name="title" type="text" class="form-control" placeholder="Project Title">
                     </div>
                     <div class="col-auto my-1">
                         <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                            <option selected>Stage</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select name="stage" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option selected value="">Stage</option>
+                            <option value="0">Commenting</option>
+                            <option value="1">Bootstrapping</option>
+                            <option value="2">Prototyping</option>
+                            <option value="3">Testing</option>
+                            <option value="4">Maintaining</option>
+                            <option value="5">Drifting</option>
+                            <option value="6">Hibernating</option>
                         </select>
                     </div>
                     <div class="col-auto my-1">
                         <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                            <option selected>Number of Members</option>
+                        <select name="members" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option selected value="">Number of Members</option>
                             <option value="1">1-5</option>
                             <option value="2">5-10</option>
                             <option value="3">10-20</option>
@@ -41,13 +45,18 @@
                         </select>
                     </div>
                     <div class="col my-1">
-                        <input type="text" class="form-control" placeholder="Open Roles">
+                        <input name="roles" type="text" class="form-control" placeholder="Open Roles">
                     </div>
                     <div class="col my-1">
-                        <input type="text" class="form-control" placeholder="Tags">
+                        <input name="tags" type="text" class="form-control" placeholder="Tags">
                     </div>
+                </div>
+                <div class="form-row justify-content-center">
                     <div class="col-auto my-1">
                         <button type="submit" class="btn btn-primary">Filter!</button>
+                    </div>
+                    <div class="col-auto my-1">
+                        <a class="btn btn-primary" href="/projects/">Reset</a>
                     </div>
                 </div>
             </form>
@@ -55,7 +64,7 @@
 </section>
 
 
-<section class="projects-list mt-4 bg-light">
+<!-- <section class="projects-list mt-4 bg-light">
         <div class="container pt-4">
             {% if latest_projects %}
                 <table class="table table-responsive-sm">
@@ -98,7 +107,7 @@
                 <p>No projects currently exist.</p>
             {% endif %}
         </div>
-    </section>
+    </section> -->
 
 <section class="projects-list mt-4 bg-light">
     <div class="container pt-4">
@@ -110,7 +119,42 @@
                         <h5 class="card-header"><a href="/projects/{{project.id}}">{{project.project_title}}</a></h5>
                         <div class="card-body">
                             <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Stage</th>
+                                        <td>{{project.get_stage_display}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Members</th>
+                                        <td>{{project.members.all|length}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Open Roles</th>
+                                        <td>
+                                            {% for role in project.role_set.all %}
+                                            <span class="badge badge-primary">{{role.role_title}}</span>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Tags</th>
+                                        <td>
+                                            {% for tag in project.tags.all %}
+                                            {% if tag.tag_type == 0 %}
+                                            <span class="badge badge-primary">{{tag.tag_title}}</span>
+                                            {% elif tag.tag_type == 1 %}
+                                            <span class="badge badge-success">{{tag.tag_title}}</span>
+                                            {% else %}
+                                            <span class="badge badge-danger">{{tag.tag_title}}</span>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                         </div>
                     </div>
                 </div>
